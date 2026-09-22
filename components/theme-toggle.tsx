@@ -1,94 +1,60 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
+import {
+  getServerThemePreference,
+  getThemePreference,
+  setThemePreference,
+  subscribeToTheme,
+} from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
-const THEME_KEY = "williamspod-theme";
-const THEME_CHANGE_EVENT = "williamspod-theme-change";
-type Theme = "dark" | "light";
-
-function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-  root.classList.remove("dark", "light");
-  root.classList.add(theme);
-  root.style.colorScheme = theme;
-
-  try {
-    localStorage.setItem(THEME_KEY, theme);
-  } catch {
-    // Storage can be unavailable in private contexts; the visual switch still works.
-  }
-
-  window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
-}
-
-function getCurrentTheme(): Theme {
-  if (typeof document === "undefined") return "dark";
-  return document.documentElement.classList.contains("light") ? "light" : "dark";
-}
-
-function subscribe(onStoreChange: () => void) {
-  if (typeof window === "undefined") return () => {};
-
-  const handleChange = () => onStoreChange();
-  window.addEventListener("storage", handleChange);
-  window.addEventListener(THEME_CHANGE_EVENT, handleChange);
-
-  return () => {
-    window.removeEventListener("storage", handleChange);
-    window.removeEventListener(THEME_CHANGE_EVENT, handleChange);
-  };
-}
+const MODES = {
+  system: { label: "Auto", icon: Monitor, next: "light", action: "Switch to day mode" },
+  light: { label: "Day", icon: Sun, next: "dark", action: "Switch to night mode" },
+  dark: { label: "Night", icon: Moon, next: "system", action: "Switch to automatic day/night mode" },
+} as const;
 
 export function ThemeToggle({
   className,
   labeled = false,
 }: {
   className?: string;
-  /** Include the current mode ("Day" / "Night") beside the icon. */
+  /** Include the current mode ("Auto" / "Day" / "Night") beside the icon. */
   labeled?: boolean;
 }) {
-  const theme = useSyncExternalStore(subscribe, getCurrentTheme, () => "dark");
-  const nextTheme: Theme = theme === "dark" ? "light" : "dark";
-  const isDay = theme === "light";
-  // The label reflects the current mode; the icon matches it.
-  const Icon = isDay ? Sun : Moon;
-
-  if (labeled) {
-    return (
-      <button
-        type="button"
-        className={cn(
-          "button-motion flex h-10 shrink-0 items-center gap-2 rounded-md border border-border px-3 text-xs font-medium text-foreground hover:bg-surface-2",
-          className,
-        )}
-        aria-label={isDay ? "Switch to night mode" : "Switch to day mode"}
-        title={isDay ? "Switch to night mode" : "Switch to day mode"}
-        onClick={() => applyTheme(nextTheme)}
-      >
-        <Icon
-          key={theme}
-          aria-hidden="true"
-          className={cn("theme-icon h-3.5 w-3.5", isDay ? "text-warn" : "text-signal")}
-        />
-        {isDay ? "Day" : "Night"}
-      </button>
-    );
-  }
+  const preference = useSyncExternalStore(
+    subscribeToTheme,
+    getThemePreference,
+    getServerThemePreference,
+  );
+  const { label, icon: Icon, next, action } = MODES[preference];
+  const description = preference === "system" ? "Auto (follows device appearance)" : label;
 
   return (
     <button
       type="button"
       className={cn(
-        "button-motion flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-muted hover:bg-surface-2 hover:text-foreground",
+        "button-motion flex h-10 shrink-0 items-center justify-center rounded-md hover:bg-surface-2",
+        labeled
+          ? "min-w-24 gap-2 border border-border px-3 text-xs font-medium text-foreground"
+          : "w-10 text-muted hover:text-foreground",
         className,
       )}
-      aria-label={isDay ? "Switch to night mode" : "Switch to day mode"}
-      title={isDay ? "Switch to night mode" : "Switch to day mode"}
-      onClick={() => applyTheme(nextTheme)}
+      aria-label={`${description}. ${action}`}
+      title={`${description}. ${action}`}
+      onClick={() => setThemePreference(next)}
     >
-      <Icon key={theme} aria-hidden="true" className="theme-icon h-3.5 w-3.5" />
+      <Icon
+        key={preference}
+        aria-hidden="true"
+        className={cn(
+          "theme-icon h-3.5 w-3.5",
+          labeled && (preference === "light" ? "text-warn" : "text-signal"),
+        )}
+      />
+      {labeled && label}
     </button>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeSync } from "@/components/theme-sync";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,22 +19,6 @@ export const metadata: Metadata = {
   description: "Private exam practice simulator with per-question analytics.",
 };
 
-const themeInitScript = `
-(() => {
-  try {
-    const stored = localStorage.getItem("williamspod-theme");
-    const theme = stored === "light" ? "light" : "dark";
-    const root = document.documentElement;
-    root.classList.remove("dark", "light");
-    root.classList.add(theme);
-    root.style.colorScheme = theme;
-  } catch {
-    document.documentElement.classList.add("dark");
-    document.documentElement.style.colorScheme = "dark";
-  }
-})();
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -42,8 +28,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <ThemeSync />
         {children}
       </body>
     </html>
