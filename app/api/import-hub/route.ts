@@ -33,12 +33,12 @@ export async function POST(req: Request) {
     ]);
     if (!bankRes.ok) {
       const j = (await bankRes.json().catch(() => ({}))) as { error?: string };
-      return NextResponse.json({ error: j.error ?? `WilliamsHub responded ${bankRes.status}` }, { status: 502 });
+      return NextResponse.json({ error: j.error ?? `studyex_medeetomihub responded ${bankRes.status}` }, { status: 502 });
     }
     feed = (await bankRes.json()) as HubBankFeed;
     index = idxRes.ok ? ((await idxRes.json()) as HubIndexEntry[]) : [];
   } catch (err) {
-    return NextResponse.json({ error: `Could not reach WilliamsHub at ${origin}: ${(err as Error).message}` }, { status: 502 });
+    return NextResponse.json({ error: `Could not reach studyex_medeetomihub at ${origin}: ${(err as Error).message}` }, { status: 502 });
   }
 
   const hubLectures = mapHubBank(feed, index, subject);

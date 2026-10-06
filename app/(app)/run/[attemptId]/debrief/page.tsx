@@ -21,10 +21,11 @@ import {
   Timer as TimerIcon,
 } from "lucide-react";
 import { WeakAreaRetryButton } from "./retry-actions";
+import { podTitle } from "@/lib/brand";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Results — WilliamsPod" };
+export const metadata = { title: podTitle("result") };
 
 export default async function DebriefPage(
   props: { params: Promise<{ attemptId: string }> },
@@ -72,7 +73,6 @@ export default async function DebriefPage(
 
       {/* ----- HERO ----- */}
       <section className="relative overflow-hidden panel-deep p-8 pop-in">
-        <div className="chequer chequer-drift pointer-events-none absolute inset-x-0 top-0 h-2 opacity-70" />
         <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr]">
           <div>
             <div className="flex items-center gap-2">
@@ -155,7 +155,7 @@ export default async function DebriefPage(
       </section>
 
       {/* ----- TELEMETRY ----- */}
-      <section className="reveal-stagger grid gap-4 lg:grid-cols-2">
+      <section className="grid gap-4 lg:grid-cols-2">
         <SectorCard
           title="By lecture"
           subtitle="Accuracy per lecture"
@@ -175,7 +175,7 @@ export default async function DebriefPage(
 
       {/* ----- WEAKEST CARDS ----- */}
       {(weakestSector || (weakestTopic && weakestTopic.name !== "Untagged")) && (
-        <section className="reveal-stagger grid gap-4 lg:grid-cols-2">
+        <section className="grid gap-4 lg:grid-cols-2">
           {weakestSector && (
             <WeakestCard
               icon={<Target className="h-3.5 w-3.5" />}
@@ -203,7 +203,7 @@ export default async function DebriefPage(
 
       {/* ----- TIMING & ERROR TELEMETRY ----- */}
       {telemetry && (
-        <section className="panel reveal p-6">
+        <section className="panel p-6">
           <div className="mb-4 flex items-center gap-2">
             <TimerIcon className="h-3.5 w-3.5 text-signal" />
             <p className="eyebrow">Timing &amp; errors</p>
@@ -247,7 +247,7 @@ export default async function DebriefPage(
           )}
           <p className="mt-3 text-[11px] leading-relaxed text-muted">
             Median time {Math.round(telemetry.medianTimeMs / 100) / 10}s per
-            question. These classifications sync to WilliamsHub to build your
+            question. These classifications sync to studyex_medeetomihub to build your
             repair queue.
           </p>
         </section>
@@ -261,7 +261,7 @@ export default async function DebriefPage(
 
       {/* ----- INTEGRITY TIMELINE ----- */}
       {integrityTimeline.length > 0 && (
-        <section className="panel reveal p-6">
+        <section className="panel p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <AlertCircle className="h-3.5 w-3.5 text-warn" />
@@ -306,7 +306,6 @@ export default async function DebriefPage(
         </div>
         {wrongAnswers.length === 0 ? (
           <div className="panel relative overflow-hidden flex items-center gap-3 p-6">
-            <div className="chequer chequer-drift pointer-events-none absolute inset-y-0 right-0 w-16 opacity-50" />
             <CheckCircle2 className="h-5 w-5 text-good" />
             <p className="text-sm text-foreground">
               Perfect score — no wrong answers to review.

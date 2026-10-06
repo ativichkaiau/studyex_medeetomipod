@@ -1,7 +1,7 @@
 /**
  * Returns the logged-in user's WilliamsSync export token. Session-authed (NOT a
- * public path) — only the owner, logged into WilliamsPod, can mint their token.
- * Paste the token + this origin into WilliamsHub → Repair → Connect WilliamsPod.
+ * public path) — only the owner, logged into the pod, can mint their token.
+ * Paste the token + this origin into studyex_medeetomihub → Repair → Connect pod.
  */
 
 import { NextResponse } from "next/server";
@@ -20,6 +20,6 @@ export async function GET(req: Request) {
     token,
     origin,
     exportUrl: `${origin}/api/sync/export?token=${token}`,
-    note: "Paste `origin` and `token` into WilliamsHub → Repair → Connect WilliamsPod.",
+    note: "Paste `origin` and `token` into studyex_medeetomihub → Repair → Connect pod.",
   });
 }

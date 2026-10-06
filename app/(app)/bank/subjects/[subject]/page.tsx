@@ -8,6 +8,7 @@ import {
   subjectLabel,
 } from "@/lib/bank";
 import { ChevronLeft, ChevronRight, LibraryBig } from "lucide-react";
+import { podTitle } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ type SubjectPageProps = {
 export async function generateMetadata({ params }: SubjectPageProps) {
   const { subject } = await params;
   return {
-    title: `${subjectLabel(subjectFromRoute(subject))} — Bank — WilliamsPod`,
+    title: podTitle(subjectLabel(subjectFromRoute(subject))),
   };
 }
 

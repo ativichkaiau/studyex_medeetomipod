@@ -34,17 +34,31 @@ function ltNumber(name: string): number {
   return m ? Number(m[1]) : 9999;
 }
 
-export function Configurator({ lectures }: { lectures: LectureChoice[] }) {
+export function Configurator({
+  lectures,
+  initialSubject = null,
+}: {
+  lectures: LectureChoice[];
+  initialSubject?: string | null;
+}) {
   const router = useRouter();
   // Default: nothing selected — user picks subject(s) deliberately.
-  const [selected, setSelected] = useState<Record<string, boolean>>({});
+  const [selected, setSelected] = useState<Record<string, boolean>>(() => {
+    if (!initialSubject) return {};
+    const next: Record<string, boolean> = {};
+    for (const l of lectures) {
+      const key = l.subject?.trim() || UNGROUPED;
+      if (key === initialSubject && l.count > 0) next[l.id] = true;
+    }
+    return next;
+  });
   const [realMin, setRealMin] = useState(DEFAULT_REAL_EXAM_MIN);
   const [pressureDeltaMin, setPressureDeltaMin] = useState(DEFAULT_PRESSURE_DELTA_MIN);
   const [maxQuestions, setMaxQuestions] = useState<string>("");
   const [shuffleQuestions, setShuffleQuestions] = useState(true);
   const [shuffleChoices, setShuffleChoices] = useState(true);
   const [useVariants, setUseVariants] = useState(false);
-  const [label, setLabel] = useState("");
+  const [label, setLabel] = useState(initialSubject ? `${initialSubject} mock` : "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -401,7 +415,7 @@ export function Configurator({ lectures }: { lectures: LectureChoice[] }) {
               <div className="flex flex-1 items-center px-3">
                 <div className="relative h-1 w-full overflow-hidden rounded-full bg-surface-3">
                   <div
-                    className="absolute inset-y-0 left-0 bg-wm-yellow transition-[width]"
+                    className="absolute inset-y-0 left-0 bg-signal transition-[width]"
                     style={{
                       width: `${Math.max(5, (effectiveMin / Math.max(1, realMin)) * 100)}%`,
                     }}
@@ -497,7 +511,7 @@ export function Configurator({ lectures }: { lectures: LectureChoice[] }) {
       <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
         <div className="panel-deep p-5">
           <div className="flex items-center gap-2">
-            <span className="dot dot-live text-signal" />
+            <span className="dot pod-pulse text-signal" />
             <p className="eyebrow">Summary</p>
           </div>
 

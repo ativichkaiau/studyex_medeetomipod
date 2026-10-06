@@ -1,134 +1,107 @@
 @import "tailwindcss";
 
 /*
- * WilliamsPod — pared-back FW15C livery.
- * Flat navy / white surfaces, fine rules, and a few decisive racing stripes.
+ * studyex_medeetomipod — examination runtime.
+ *
+ * Shares DNA with studyex_medeetomihub / studyex_medeetomilab: Geist Sans +
+ * Geist Mono, near-black surfaces, one precise cobalt accent, technical
+ * labels, restrained geometry. The Pod is the faster, more isolated member of
+ * the family — during a live run the interface gets out of the way and the
+ * question is the only object that matters.
+ *
+ * Token names are deliberately stable across the redesign so every route
+ * adopts the new system from this one file.
  */
 
-/* ---- Constant livery colours (fixed across day/night — they're the car) ---- */
-:root {
-  --wm-navy: #0a2472;
-  --wm-blue: #2e5bff;
-  --wm-red: #e4002b;
-  --wm-yellow: #ffcc00;
-  --wm-white: #ffffff;
-  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
+/* ---------------------------------------------------------------- dark ---- */
 :root, :root.dark {
   color-scheme: dark;
 
-  /* Quiet navy surfaces leave room for the livery colours. */
-  --background: #0a111e;
-  --background-tint: #0d1625;
-  --surface: #111c2d;
-  --surface-2: #18253a;
-  --surface-3: #22334c;
+  /* Surfaces — near-black, flat, no gradients. */
+  --background: #08090a;        /* bg-root   */
+  --background-tint: #0b0c0e;
+  --surface: #0e1012;           /* bg-panel  */
+  --surface-2: #14171a;         /* bg-raised */
+  --surface-3: #1b1f23;
 
-  /* Hairlines define the surfaces. */
-  --border: #263247;
-  --border-strong: #3a4a63;
-  --border-bright: #64748b;
+  /* Hairlines carry all the structure. */
+  --border: #1f2328;            /* border-subtle */
+  --border-strong: #30363d;
+  --border-bright: #434b55;
 
-  /* Text */
-  --foreground: #f1f4f9;
-  --foreground-dim: #bbc5d5;
-  --muted: #93a1b7;
-  --muted-strong: #b2bfd2;
+  /* Text — warm off-white down to a quiet grey. */
+  --foreground: #f1f2ef;        /* text-primary   */
+  --foreground-dim: #c3c7cc;
+  --muted-strong: #a4a8ae;      /* text-secondary */
+  --muted: #666b73;             /* text-muted     */
 
-  /* App signal — Camel yellow under the floodlights */
-  --signal: #ffcc00;
-  --signal-strong: #e6b800;
-  --signal-soft: rgba(255, 204, 0, 0.14);
-  --signal-glow: 0 0 0 1px rgba(255, 204, 0, 0.38);
+  /* The single accent: precise cobalt. Used for active state and nothing
+     decorative. */
+  --signal: #5278ff;
+  --signal-strong: #7592ff;
+  --signal-soft: rgba(82, 120, 255, 0.14);
+  --signal-line: rgba(82, 120, 255, 0.42);
 
-  /* Parent brand — VESTRIPPN green (sponsors keep their own colours) */
-  --brand: #2fc46e;
-  --brand-strong: #24a85a;
-  --brand-soft: rgba(47, 196, 110, 0.15);
+  /* Parent ecosystem mark (VESTRIPPN) — deliberately quiet so it never
+     competes with the accent. */
+  --brand: #8b93a7;
+  --brand-strong: #a6adbe;
+  --brand-soft: rgba(139, 147, 167, 0.14);
 
-  /* Status — green flag / orange caution / Canon red */
-  --good: #35c76f;
-  --good-soft: rgba(53, 199, 111, 0.15);
-  --warn: #ff9233;
-  --warn-soft: rgba(255, 146, 51, 0.15);
-  --bad: #ff4757;
-  --bad-soft: rgba(255, 71, 87, 0.15);
+  /* Response / outcome state. Restrained, never celebratory. */
+  --good: #3fa06a;
+  --good-soft: rgba(63, 160, 106, 0.14);
+  --warn: #c2913c;              /* flagged */
+  --warn-soft: rgba(194, 145, 60, 0.14);
+  --bad: #cf5f5c;
+  --bad-soft: rgba(207, 95, 92, 0.14);
 
-  /* Instrument grid */
-  --grid: rgba(255, 255, 255, 0.025);
-  --grid-strong: rgba(255, 255, 255, 0.055);
-  --scanline: rgba(255, 255, 255, 0.014);
+  /* Precise grid, used sparingly as a backdrop. */
+  --grid: rgba(255, 255, 255, 0.022);
+  --grid-strong: rgba(255, 255, 255, 0.05);
 
-  /* Keep existing token names so every route adopts the flat surface system. */
-  --clay-raised: none;
-  --clay-raised-hover: none;
-  --clay-deep: none;
-  --clay-inset: inset 0 0 0 1px var(--border);
-  --clay-chip: none;
-  --clay-border: var(--border);
-
-  --focus-ring: rgba(255, 204, 0, 0.55);
-  --dot-ring: rgba(0, 0, 0, 0.5);
-
-  /* Motif inks */
-  --stripe-blue: #254b9b;
-  --hatch-ink: rgba(147, 161, 183, 0.16);
-  --checker-ink: rgba(238, 243, 252, 0.16);
-  --roundel-face: #f4f6fb;
-  --roundel-ink: #0a2472;
+  --focus-ring: var(--signal);
 }
 
+/* --------------------------------------------------------------- light ---- */
 :root.light {
   color-scheme: light;
 
-  /* Cool white — the FW15C's white bodywork */
-  --background: #f7f9fc;
-  --background-tint: #f0f3f8;
+  --background: #fbfbfa;
+  --background-tint: #f5f5f4;
   --surface: #ffffff;
-  --surface-2: #f0f3f8;
-  --surface-3: #e6ecf4;
+  --surface-2: #f5f5f4;
+  --surface-3: #ececeb;
 
-  --border: #dce3ed;
-  --border-strong: #c3d0e2;
-  --border-bright: #93a6c4;
+  --border: #e3e3e1;
+  --border-strong: #cfcfcc;
+  --border-bright: #a8a8a4;
 
-  /* Williams navy ink */
-  --foreground: #152846;
-  --foreground-dim: #3f5170;
-  --muted: #627189;
-  --muted-strong: #47597a;
+  --foreground: #16181a;
+  --foreground-dim: #3d4246;
+  --muted-strong: #5c6166;
+  --muted: #80868d;
 
-  /* Camel gold — yellow tuned to stay readable on white paint */
-  --signal: #8a6a00;
-  --signal-strong: #6f5500;
-  --signal-soft: rgba(255, 204, 0, 0.22);
-  --signal-glow: 0 0 0 1px rgba(184, 134, 11, 0.3);
+  --signal: #2f50d8;
+  --signal-strong: #2440b4;
+  --signal-soft: rgba(47, 80, 216, 0.1);
+  --signal-line: rgba(47, 80, 216, 0.38);
 
-  /* Parent brand — VESTRIPPN green (daylight) */
-  --brand: #17a34a;
-  --brand-strong: #138a3e;
-  --brand-soft: rgba(23, 163, 74, 0.14);
+  --brand: #5f6880;
+  --brand-strong: #474f63;
+  --brand-soft: rgba(95, 104, 128, 0.12);
 
-  --good: #1f9d57;
-  --good-soft: rgba(31, 157, 87, 0.14);
-  --warn: #b45309;
-  --warn-soft: rgba(180, 83, 9, 0.15);
-  --bad: #d81f33;
-  --bad-soft: rgba(216, 31, 51, 0.14);
+  --good: #1d7a4c;
+  --good-soft: rgba(29, 122, 76, 0.12);
+  --warn: #8a6410;
+  --warn-soft: rgba(138, 100, 16, 0.12);
+  --bad: #b03a38;
+  --bad-soft: rgba(176, 58, 56, 0.1);
 
-  --grid: rgba(11, 44, 94, 0.045);
-  --grid-strong: rgba(11, 44, 94, 0.08);
-  --scanline: rgba(11, 44, 94, 0.02);
+  --grid: rgba(16, 18, 20, 0.04);
+  --grid-strong: rgba(16, 18, 20, 0.08);
 
-  --focus-ring: rgba(138, 106, 0, 0.45);
-  --dot-ring: rgba(255, 255, 255, 0.9);
-
-  --stripe-blue: var(--wm-navy);
-  --hatch-ink: rgba(11, 44, 94, 0.12);
-  --checker-ink: rgba(11, 44, 94, 0.2);
-  --roundel-face: #ffffff;
-  --roundel-ink: #0a2472;
+  --focus-ring: var(--signal);
 }
 
 @theme inline {
@@ -157,264 +130,135 @@
   --color-bad: var(--bad);
   --color-bad-soft: var(--bad-soft);
 
-  /* Livery colours exposed as utilities (bg-wm-red, text-wm-yellow, …) */
-  --color-wm-navy: var(--wm-navy);
-  --color-wm-blue: var(--wm-blue);
-  --color-wm-red: var(--wm-red);
-  --color-wm-yellow: var(--wm-yellow);
-
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-geist-sans);
 
-  --radius-xs: 3px;
-  --radius-sm: 5px;
-  --radius-md: 7px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  /* 2–6px. Nothing in this product is pill-shaped. */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
 }
 
 html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Helvetica, Arial, sans-serif;
-  font-feature-settings: "ss01", "cv11";
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Numeric & code emphasis */
+/* ------------------------------------------------------------ type -------- */
+
+/* Technical label: exam IDs, field names, column heads, status. */
+.eyebrow,
+.mono-label {
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Numerics: timer, scores, counts, percentages. */
+.digit {
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 .tabular {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
 
-/* Instrument grid backdrop */
+/* Headings stay sans and quiet — this product does not shout. */
+.display-xl {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.display-lg {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+/* Question stems and answer text — never monospace, always comfortable. */
+.stem {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--foreground);
+}
+@media (min-width: 768px) {
+  .stem { font-size: 1.0625rem; }
+}
+
+/* --------------------------------------------------------- surfaces ------- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+/* Kept as names so existing routes adopt the flat system unchanged. */
+.panel-flat,
+.panel-deep {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+/* Recessed well: inputs, tracks, code, metadata blocks. */
+.well,
+.clay-inset {
+  background: var(--background-tint);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.panel-hover {
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.panel-hover:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+}
+
+/* Precise instrument grid — backdrop only, never over content. */
 .bg-grid {
   background-color: var(--background);
   background-image:
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-.bg-grid-strong {
-  background-color: var(--background);
-  background-image:
-    linear-gradient(to right, var(--grid-strong) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-strong) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-size: 48px 48px;
 }
 
-/* Hairline / scanline overlay (used for cockpit feel) */
-.bg-scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    var(--scanline) 3px,
-    var(--scanline) 4px
-  );
-}
-
-/* ---- FW15C livery motifs ---- */
-/* Signature racing stripe: Williams navy band → Canon red flash → Camel yellow. */
-.livery-stripe {
-  background: linear-gradient(
-    90deg,
-    var(--wm-navy) 0 58%,
-    var(--wm-red) 58% 76%,
-    var(--wm-yellow) 76% 100%
-  );
-}
-.livery-stripe-v {
-  background: linear-gradient(
-    180deg,
-    var(--wm-navy) 0 58%,
-    var(--wm-red) 58% 76%,
-    var(--wm-yellow) 76% 100%
-  );
-}
-/* Left racing accent for cards/rows. */
-.livery-edge { position: relative; }
-.livery-edge::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-  background: linear-gradient(180deg, var(--stripe-blue) 0 60%, var(--wm-red) 60% 78%, var(--wm-yellow) 78%);
-}
-/* Parallel livery bands, contained in the page margins and hero endcap. */
-.racing-stripes {
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 0 28%,
-    var(--stripe-blue) 28% 45%,
-    transparent 45% 49%,
-    var(--wm-red) 49% 53%,
-    transparent 53% 57%,
-    var(--wm-yellow) 57% 66%,
-    transparent 66%
-  );
-}
-.track-hatch {
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    125deg, transparent 0 6px, var(--hatch-ink) 6px 7px, transparent 7px 12px
-  );
-}
-.page-frame {
-  position: relative;
-}
-@media (min-width: 1280px) {
-  .page-frame::before,
-  .page-frame::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    top: 2.5rem;
-    bottom: 2.5rem;
-    width: 9px;
-    border-top: 1px solid var(--border-strong);
-    border-bottom: 1px solid var(--border-strong);
-  }
-  .page-frame::before { left: -1rem; border-left: 1px solid var(--border); }
-  .page-frame::after { right: -1rem; border-right: 1px solid var(--border); }
-}
-.auth-shell {
-  position: relative;
-  isolation: isolate;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 1.25rem 3rem;
-}
-.auth-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: linear-gradient(90deg, var(--stripe-blue) 0 58%, var(--wm-red) 58% 76%, var(--wm-yellow) 76%);
-}
-.auth-stripes {
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 0 auto;
-  width: clamp(6rem, 24vw, 24rem);
-  opacity: 0.14;
-}
-@media (max-width: 639px) {
-  .auth-stripes { top: 0; bottom: auto; height: 12rem; width: 12rem; }
-}
-/* Chequered finish flag (success / completed) — mode-aware ink. */
-.chequer {
-  background-image:
-    conic-gradient(var(--checker-ink) 0 25%, transparent 0 50%, var(--checker-ink) 0 75%, transparent 0);
-  background-size: 12px 12px;
-  opacity: 0.9;
-}
-/* Race-number roundel — white disc, navy number, Camel ring (car 0 energy). */
-.roundel {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: var(--roundel-face);
-  color: var(--roundel-ink);
-  font-weight: 800;
-  font-style: italic;
-  font-variant-numeric: tabular-nums;
-  border: 1px solid var(--border-strong);
-}
-/* Start-lights row — the FIA gantry (loading / countdown). */
-.start-lamp {
+/* Small status indicator. Shape + colour, never colour alone. */
+.dot {
   display: inline-block;
-  width: 0.6rem; height: 0.6rem;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #3a0000;
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.8);
-}
-.start-lamp.lit {
-  background: var(--wm-red);
-  box-shadow: 0 0 9px var(--wm-red), inset 0 0 3px rgba(255, 255, 255, 0.4);
-}
-/* Sliding stripe sheen for hero bars. */
-@keyframes livery-slide {
-  0% { background-position: 0 0; }
-  100% { background-position: 56px 0; }
-}
-.livery-slide {
-  background-size: 56px 100%;
-  animation: livery-slide 2.6s linear infinite;
-}
-/* Start-lights sequential flicker. */
-@keyframes lamp-arm {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
-}
-.start-lamp.lit { animation: lamp-arm 1.4s ease-in-out infinite; }
-
-/* ---- Flat surfaces ---- */
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--clay-border);
-  box-shadow: var(--clay-raised);
-  border-radius: var(--radius-lg);
-}
-.panel-flat {
-  background: var(--surface);
-  border: 1px solid var(--clay-border);
-  box-shadow: var(--clay-chip);
-  border-radius: var(--radius-lg);
-}
-.panel-deep {
-  background: var(--surface);
-  border: 1px solid var(--clay-border);
-  box-shadow: var(--clay-deep);
-  border-radius: var(--radius-xl);
+  background: currentColor;
 }
 
-/* Bordered well (inputs, progress tracks, code blocks) */
-.clay-inset {
-  background: var(--background-tint);
-  box-shadow: var(--clay-inset);
-  border-radius: var(--radius-md);
-}
+/* ------------------------------------------------------------ focus ------- */
 
-/* Display numerics — used for big timer / score */
-.digit {
-  font-family: var(--font-mono), ui-monospace, "SF Mono", monospace;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1, "ss01";
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-/* Interactive panels move independently of their scroll reveal transform. */
-.panel-hover {
-  transition: translate 320ms var(--motion-ease), border-color 200ms ease,
-    background-color 200ms ease, box-shadow 320ms ease;
-}
-.panel-hover:hover {
-  border-color: var(--border-bright);
-  background-color: var(--surface-2);
-}
-.panel-hover:active {
-  background-color: var(--background-tint);
-}
-
-/* Focus ring */
 :focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 4px;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }
 
-/* No selection / no drag during exam runs. */
+/* ---------------------------------------------------------- lockdown ------ */
+/* A running pod suppresses selection and drag. Inputs stay usable. */
 .lockdown,
 .lockdown * {
   user-select: none !important;
@@ -427,80 +271,42 @@ html, body {
   -webkit-user-select: text !important;
 }
 
-/* Pulse for live timer */
+/* ----------------------------------------------------------- motion ------- */
+/* Motion is functional only: it confirms a state change, never decorates. */
+
+@keyframes pod-fade-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pop-in { animation: pod-fade-in 140ms ease-out both; }
+
+@keyframes pod-bar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.bar-sweep {
+  transform-origin: left;
+  animation: pod-bar 320ms ease-out both;
+}
+
+/* Live runtime heartbeat — used only where state is genuinely live. */
 @keyframes pod-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  50%      { opacity: 0.45; }
 }
-.pod-pulse { animation: pod-pulse 1.1s ease-in-out infinite; }
+.pod-pulse { animation: pod-pulse 1.6s ease-in-out infinite; }
 
-/* A more deliberate entrance for newly opened panels. */
-@keyframes pop-in {
-  0% { opacity: 0; transform: translateY(16px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.pop-in { animation: pop-in 520ms var(--motion-ease) backwards; }
-
-/* Sweep-in for bars */
-@keyframes bar-sweep {
-  0% { transform: scaleX(0); transform-origin: left; }
-  100% { transform: scaleX(1); transform-origin: left; }
-}
-.bar-sweep { animation: bar-sweep 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-
-/* Slow rotate for radial elements */
-@keyframes slow-spin {
-  to { transform: rotate(360deg); }
-}
-.slow-spin { animation: slow-spin 8s linear infinite; }
-
-/* Glow ring (used for primary CTA & active states) */
-.signal-glow {
-  box-shadow: var(--signal-glow);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .pod-pulse { animation: none !important; }
 }
 
-/* Top status strip indicator dot */
-.dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-/* Section eyebrow */
-.eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* Display heading style */
-.display-xl {
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.045em;
-  font-weight: 600;
-}
-.display-lg {
-  font-size: clamp(1.75rem, 3vw, 2rem);
-  line-height: 1.15;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-}
-/* Race-lean italics for hero words — the 1993 sponsor-decal slant */
-.race-lean {
-  font-style: italic;
-  letter-spacing: -0.02em;
-}
-
-/* Smooth-scroll within scrollable panels */
-.smooth { scroll-behavior: smooth; }
-
-/* Scrollbar treatment */
-::-webkit-scrollbar { width: 12px; height: 12px; }
+/* -------------------------------------------------------- scrollbar ------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
@@ -509,348 +315,9 @@ html, body {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
 
-/* ==========================================================================
-   FW15C LIVERY MOTION
-   Two layers, both decorative:
-     · Ambient  — always-running idle motion (sheen, drift, kerb, gantry).
-     · Scroll   — native scroll-driven timelines (lap rail, reveals, parallax).
-   Scroll-driven rules sit behind @supports + (prefers-reduced-motion:
-   no-preference), so browsers without `animation-timeline` — and anyone who
-   asks for less motion — simply get the static layout with nothing hidden.
-   ========================================================================== */
-
-/* ---------- Ambient ---------- */
-
-/* Specular highlight travelling along a livery stripe — light down the flank. */
-@keyframes livery-sheen {
-  0%      { background-position: 220% 0; }
-  60%     { background-position: -120% 0; }
-  100%    { background-position: -120% 0; }
-}
-/* Sets no `position` on purpose: Tailwind utilities sit in @layer utilities,
-   so ANY unlayered rule here would beat `absolute`/`fixed` on the host no
-   matter the specificity. The host supplies its own positioning instead —
-   `.livery-rail` is relative, and the in-panel stripes are already absolute. */
-.livery-sheen { overflow: hidden; }
-.livery-sheen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(
-    100deg,
-    transparent 0 42%,
-    rgba(255, 255, 255, 0.5) 50%,
-    transparent 58% 100%
-  );
-  background-size: 240% 100%;
-  background-repeat: no-repeat;
-  animation: livery-sheen 3.8s ease-in-out infinite;
-}
-
-/* Diagonal bands breathing. Pans the gradient inside its own box rather than
-   transforming the element, so it can never overflow an unclipped parent. */
-@keyframes stripes-sway {
-  0%, 100% { background-position: 0% 0%; }
-  50%      { background-position: 0% 100%; }
-}
-.stripes-sway {
-  background-size: 100% 155%;
-  animation: stripes-sway 6s ease-in-out infinite;
-}
-
-/* Kerb hatching advancing. 14.649px = one 12px period along the 125deg axis
-   (12 / sin 125deg), so the loop is seamless. */
-@keyframes hatch-advance {
-  to { background-position: 14.649px 0; }
-}
-.hatch-scroll { animation: hatch-advance 1.2s linear infinite; }
-
-/* Chequered flag streaming past — one full 12px tile per cycle. */
-@keyframes chequer-drift {
-  to { background-position: 12px 0; }
-}
-.chequer-drift { animation: chequer-drift 1.6s linear infinite; }
-
-/* Start-light gantry: five lamps arming in sequence, not in unison. */
-.lamp-row .start-lamp:nth-child(1) { animation-delay: 0ms; }
-.lamp-row .start-lamp:nth-child(2) { animation-delay: 150ms; }
-.lamp-row .start-lamp:nth-child(3) { animation-delay: 300ms; }
-.lamp-row .start-lamp:nth-child(4) { animation-delay: 450ms; }
-.lamp-row .start-lamp:nth-child(5) { animation-delay: 600ms; }
-
-/* Header lap rail — dim livery track under a bright livery fill. Without
-   scroll-timeline support the fill simply stays full width (today's stripe). */
-.livery-rail { position: relative; overflow: hidden; }
-.livery-rail-track { position: absolute; inset: 0; opacity: 0.28; }
-.livery-rail-fill { position: absolute; inset: 0; transform-origin: left center; }
-
-/* ---------- Scroll-driven ---------- */
-
-@keyframes rail-fill   { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes reveal-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes stripe-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes stripes-parallax { from { transform: translate3d(0, -7%, 0); } to { transform: translate3d(0, 7%, 0); } }
-
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    /* Lap progress across the whole document. */
-    .livery-rail-fill.scroll-rail {
-      animation: rail-fill linear both;
-      animation-timeline: scroll(root block);
-    }
-    /* Hero bands slide against the page as it moves. */
-    .parallax-stripes {
-      scale: 1.16;
-      animation: stripes-parallax linear both;
-      animation-timeline: scroll(root block);
-    }
-  }
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: reveal-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 26%;
-    }
-    /* Same rise, offset per child so a row arrives in sequence. */
-    .reveal-stagger > * {
-      animation: reveal-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 26%;
-    }
-    .reveal-stagger > *:nth-child(2)   { animation-range: entry 4% cover 30%; }
-    .reveal-stagger > *:nth-child(3)   { animation-range: entry 8% cover 34%; }
-    .reveal-stagger > *:nth-child(4)   { animation-range: entry 12% cover 38%; }
-    .reveal-stagger > *:nth-child(n+5) { animation-range: entry 16% cover 42%; }
-
-    /* Livery edge painted down a panel as it enters view. */
-    .stripe-in { position: relative; }
-    .stripe-in::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      border-top-left-radius: inherit;
-      border-bottom-left-radius: inherit;
-      background: linear-gradient(
-        180deg,
-        var(--stripe-blue) 0 60%,
-        var(--wm-red) 60% 78%,
-        var(--wm-yellow) 78%
-      );
-      transform-origin: top;
-      animation: stripe-grow linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 32%;
-    }
-  }
-}
-
-/* ---------- Ambient, second wave ---------- */
-
-/* Gloss travelling across the Camel-yellow CTA — sunlight down wet paint.
-   Hosts supply `relative overflow-hidden` (see the layer note above). */
-@keyframes signal-sheen {
-  0%   { transform: translateX(-170%) skewX(-18deg); }
-  55%  { transform: translateX(280%) skewX(-18deg); }
-  100% { transform: translateX(280%) skewX(-18deg); }
-}
-.signal-sheen::after {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 36%;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.45),
-    transparent
-  );
-  animation: signal-sheen 3.4s ease-in-out infinite;
-}
-.signal-sheen:disabled::after,
-.signal-sheen[aria-disabled="true"]::after { content: none; }
-
-/* Instrument grid creeping past — the track moving under the car. 64px is one
-   full cell of .bg-grid, so the loop is seamless. Deliberately near-subliminal. */
-@keyframes grid-drift {
-  to { background-position: 64px 64px; }
-}
-.grid-drift { animation: grid-drift 38s linear infinite; }
-
-/* Telemetry ring sweeping the race-number roundel. Sits outside the disc
-   (inset -5px) as a two-segment border, so it never covers the number. */
-.roundel-live { position: relative; }
-.roundel-live::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 9999px;
-  border: 2px solid transparent;
-  border-top-color: var(--wm-yellow);
-  border-right-color: var(--wm-red);
-  pointer-events: none;
-  animation: slow-spin 6s linear infinite;
-}
-
-/* Radar ping off a live status dot. */
-@keyframes dot-ping {
-  0%        { transform: scale(1); opacity: 0.5; }
-  70%, 100% { transform: scale(3.2); opacity: 0; }
-}
-.dot-live { position: relative; }
-.dot-live::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: currentColor;
-  pointer-events: none;
-  animation: dot-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-/* Timing beacon sliding down the page-frame margin rails (wide screens only —
-   the rails themselves only exist there). */
-@keyframes frame-beacon {
-  from { background-position-y: -90px; }
-  to   { background-position-y: calc(100% + 90px); }
-}
-@media (min-width: 1280px) {
-  .page-frame::before,
-  .page-frame::after {
-    background-image: linear-gradient(
-      180deg,
-      transparent 0 42%,
-      var(--signal) 42% 58%,
-      transparent 58%
-    );
-    background-size: 100% 90px;
-    background-repeat: no-repeat;
-    animation: frame-beacon 4.8s linear infinite;
-  }
-  /* Offset so the two rails never run in lockstep. */
-  .page-frame::after { animation-delay: -2.4s; }
-}
-
-/* ---------- Entrances and interaction ---------- */
-
-.button-motion {
-  transition: translate 240ms var(--motion-ease), scale 240ms var(--motion-ease),
-    background-color 200ms ease, border-color 200ms ease, color 200ms ease,
-    box-shadow 240ms ease;
-}
-.button-motion > svg,
-.nav-motion > svg {
-  transition: translate 280ms var(--motion-ease), rotate 280ms var(--motion-ease);
-}
-.nav-motion {
-  transition: background-color 200ms ease, color 200ms ease;
-}
-.nav-motion::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: auto 10px -2px;
-  height: 2px;
-  background: var(--signal);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 320ms var(--motion-ease);
-}
-.nav-motion[aria-current="page"]::after {
-  transform: scaleX(1);
-  animation: nav-draw 450ms var(--motion-ease) backwards;
-}
-@keyframes nav-draw {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-@keyframes theme-turn {
-  from { opacity: 0; rotate: -100deg; scale: 0.4; }
-  to { opacity: 1; rotate: 0deg; scale: 1; }
-}
-.theme-icon { animation: theme-turn 480ms var(--motion-ease); }
-
-/* Each field arrives in sequence; focus immediately cancels its entrance. */
-@keyframes field-enter {
-  from { opacity: 0; translate: 0 14px; }
-  to { opacity: 1; translate: 0 0; }
-}
-.form-motion > * {
-  animation: field-enter 550ms var(--motion-ease) backwards;
-  animation-delay: 140ms;
-}
-.form-motion > :nth-child(2) { animation-delay: 210ms; }
-.form-motion > :nth-child(3) { animation-delay: 280ms; }
-.form-motion > :nth-child(4) { animation-delay: 350ms; }
-.form-motion > :nth-child(n+5) { animation-delay: 420ms; }
-.form-motion > :focus-within,
-.form-motion > :focus-visible { animation: none; }
-
-/* A short streak passes along the hero edge without crossing the text. */
-@keyframes hero-streak {
-  0% { translate: -110% 0; opacity: 0; }
-  12% { opacity: 0.85; }
-  70%, 100% { translate: 500% 0; opacity: 0; }
-}
-.hero-motion::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: auto auto 0 0;
-  width: 24%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--wm-yellow), var(--wm-red));
-  animation: hero-streak 3.6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  :where(body, .panel, .panel-flat, .panel-deep, .app-header) {
-    transition: background-color 350ms ease, border-color 250ms ease, color 250ms ease;
-  }
-  .button-motion:not(:disabled):not([aria-disabled="true"]):active {
-    scale: 0.96;
-    translate: 0 1px;
-  }
-  .panel-hover:active { translate: 0 0; }
-
-  @media (hover: hover) and (pointer: fine) {
-    .button-motion:not(:disabled):not([aria-disabled="true"]):hover {
-      translate: 0 -2px;
-    }
-    .button-motion:hover > svg:not(.theme-icon) { translate: 3px 0; }
-    .panel-hover:hover,
-    .panel-hover:focus-visible {
-      translate: 0 -5px;
-      box-shadow: 0 10px 22px -18px var(--foreground-dim);
-    }
-    .nav-motion:hover > svg { translate: 0 -2px; rotate: -8deg; }
-    .nav-motion:hover::after { transform: scaleX(1); }
-  }
-}
-
-/* Keep every control visible and stationary when less motion is requested. */
+/* Functional press feedback on controls — confirms the tap, nothing more. */
+.button-motion { transition: background-color 100ms ease, border-color 100ms ease; }
+.button-motion:not(:disabled):not([aria-disabled="true"]):active { translate: 0 1px; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-  .parallax-stripes { scale: 1; }
-  .page-frame::before, .page-frame::after { background-image: none; }
-  .hero-motion::after, .signal-sheen::after, .livery-sheen::after,
-  .roundel-live::after, .dot-live::after { content: none; }
+  .button-motion:active { translate: none; }
 }
-
-/* A live run stays calm: no decorative sweeps on the exam HUD. The timer's own
-   pod-pulse survives — that one is functional, not decoration. */
-.lockdown .signal-sheen::after,
-.lockdown .livery-sheen::after {
-  content: none;
-}
-.lockdown .button-motion { translate: none !important; scale: none !important; }
-.lockdown .button-motion > svg { translate: none !important; }

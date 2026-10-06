@@ -5,8 +5,9 @@ import { lectures, questions } from "@/lib/db/schema";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Upload } from "lucide-react";
 import { Configurator } from "./configurator";
+import { podTitle } from "@/lib/brand";
 
-export const metadata = { title: "New test — WilliamsPod" };
+export const metadata = { title: podTitle("initialize") };
 export const dynamic = "force-dynamic";
 
 async function loadLectureChoices() {
@@ -28,7 +29,10 @@ async function loadLectureChoices() {
     .orderBy(lectures.orderIndex, lectures.name);
 }
 
-export default async function NewRunPage() {
+export default async function NewRunPage(props: {
+  searchParams: Promise<{ subject?: string }>;
+}) {
+  const { subject } = await props.searchParams;
   const lectureRows = await loadLectureChoices();
   const lectures = lectureRows.map((l) => ({
     id: l.id,
@@ -42,30 +46,27 @@ export default async function NewRunPage() {
   return (
     <div className="space-y-8">
       <Link
-        href="/run"
-        className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-muted hover:text-foreground"
+        href="/"
+        className="inline-flex items-center gap-1 font-mono text-xs text-muted hover:text-foreground"
       >
-        <ChevronLeft className="h-3 w-3" /> Practice
+        <ChevronLeft className="h-3 w-3" /> pods
       </Link>
 
-      <header>
-        <div className="flex items-center gap-2">
-          <span className="dot text-signal pod-pulse" />
-          <p className="eyebrow">New test</p>
-        </div>
-        <h1 className="mt-2 display-lg text-foreground">
-          Set up a <span className="race-lean text-signal">practice test</span>
+      <header className="space-y-2">
+        <p className="mono-label">Exam inspector</p>
+        <h1 className="display-lg text-foreground">
+          {subject ?? "Custom examination"}
         </h1>
-        <p className="mt-2 max-w-2xl text-sm text-foreground-dim">
-          Pick lectures, set a timer tighter than the real Exam Pod, and choose
-          how many questions. Tests run in lockdown: fullscreen where supported,
-          leaving the app raises an integrity flag,{" "}
-          <span className="text-bad">two flags auto-submit the test</span>.
+        <p className="max-w-2xl text-sm text-muted-strong">
+          Select scope and runtime, then initialize the pod. The pod runs in
+          lockdown: fullscreen where supported, leaving the app raises an
+          integrity flag,{" "}
+          <span className="text-bad">two flags terminate and submit</span>.
         </p>
       </header>
 
       {empty ? (
-        <div className="panel bg-grid flex flex-col items-center gap-3 py-14 text-center">
+        <div className="panel flex flex-col items-center gap-3 py-14 text-center">
           <p className="text-sm text-muted">
             The bank is empty — upload questions (.xlsx) first.
           </p>
@@ -77,7 +78,7 @@ export default async function NewRunPage() {
           </Button>
         </div>
       ) : (
-        <Configurator lectures={lectures} />
+        <Configurator lectures={lectures} initialSubject={subject ?? null} />
       )}
     </div>
   );

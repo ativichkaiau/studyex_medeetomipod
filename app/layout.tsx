@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeSync } from "@/components/theme-sync";
 import { themeInitScript } from "@/lib/theme";
+import { DESCRIPTION, PRODUCT, podTitle } from "@/lib/brand";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,8 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WilliamsPod — Simulator",
-  description: "Private exam practice simulator with per-question analytics.",
+  title: { default: podTitle(), template: "%s" },
+  description: DESCRIPTION,
+  applicationName: PRODUCT,
+  openGraph: {
+    title: podTitle(),
+    description: DESCRIPTION,
+    siteName: PRODUCT,
+    type: "website",
+  },
 };
 
 export default function RootLayout({

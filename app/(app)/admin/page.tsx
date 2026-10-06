@@ -5,8 +5,9 @@ import { attempts, invites, users } from "@/lib/db/schema";
 import { requireUser } from "@/lib/auth";
 import { inviteStatus } from "@/lib/users";
 import { AdminTools } from "./admin-tools";
+import { podTitle } from "@/lib/brand";
 
-export const metadata = { title: "Admin — WilliamsPod" };
+export const metadata = { title: podTitle("admin") };
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {

@@ -8,8 +8,9 @@ import { DeleteAttemptButton } from "@/components/delete-attempt-button";
 import { formatDuration, pct } from "@/lib/utils";
 import { Activity, ChevronRight, Play } from "lucide-react";
 import { requireUser } from "@/lib/auth";
+import { podTitle } from "@/lib/brand";
 
-export const metadata = { title: "History — WilliamsPod" };
+export const metadata = { title: podTitle("attempts") };
 export const dynamic = "force-dynamic";
 
 export default async function HistoryPage() {
@@ -32,7 +33,7 @@ export default async function HistoryPage() {
             <p className="eyebrow">History</p>
           </div>
           <h1 className="mt-2 display-lg text-foreground">
-            Your test <span className="race-lean text-signal">history</span>
+            Your test <span className="text-signal">history</span>
           </h1>
         </header>
         <div className="panel flex flex-col items-center gap-3 py-14 text-center">
@@ -66,7 +67,7 @@ export default async function HistoryPage() {
           <p className="eyebrow">History</p>
         </div>
         <h1 className="mt-2 display-lg text-foreground">
-          Your test <span className="race-lean text-signal">history</span>
+          Your test <span className="text-signal">history</span>
         </h1>
         <p className="mt-1 text-sm text-foreground-dim">
           <span className="digit text-foreground">{totalRuns}</span> completed test

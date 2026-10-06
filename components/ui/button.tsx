@@ -6,15 +6,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "button-motion inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent text-sm font-medium disabled:pointer-events-none disabled:opacity-40",
+  "button-motion inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border border-transparent text-sm font-medium transition-colors duration-100 disabled:pointer-events-none disabled:opacity-40",
   {
     variants: {
       variant: {
         default:
           "bg-foreground text-background hover:bg-foreground-dim",
-        // Camel-yellow paint with Williams-navy lettering — the hero CTA in both modes.
+        // Primary action — the one cobalt accent, used sparingly.
         signal:
-          "signal-sheen relative overflow-hidden bg-wm-yellow text-wm-navy hover:bg-[#f2c200] active:bg-[#e6b800]",
+          "bg-signal text-white hover:bg-signal-strong",
         outline:
           "border-border bg-transparent text-foreground hover:border-border-strong hover:bg-surface-2",
         ghost:
@@ -22,13 +22,13 @@ const buttonVariants = cva(
         danger:
           "bg-bad text-white hover:bg-bad/85",
         subtle:
-          "bg-surface-2 text-foreground hover:bg-surface-3",
+          "border-border bg-surface-2 text-foreground hover:bg-surface-3",
       },
       size: {
         sm: "h-8 px-3 text-xs",
-        md: "h-10 px-4 text-sm",
-        lg: "h-12 px-6 text-[15px]",
-        icon: "h-10 w-10",
+        md: "h-9 px-4 text-sm",
+        lg: "h-11 px-5 text-sm",
+        icon: "h-9 w-9",
       },
     },
     defaultVariants: { variant: "default", size: "md" },

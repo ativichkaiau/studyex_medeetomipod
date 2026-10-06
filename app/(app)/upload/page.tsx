@@ -3,8 +3,9 @@ import { UploadClient } from "./upload-client";
 import { HubImportClient } from "./hub-import-client";
 import { NotebookLmHelper } from "@/components/notebook-lm-helper";
 import { requireUser } from "@/lib/auth";
+import { podTitle } from "@/lib/brand";
 
-export const metadata = { title: "Upload — WilliamsPod" };
+export const metadata = { title: podTitle("ingest") };
 
 export default async function UploadPage() {
   const user = await requireUser();
@@ -17,7 +18,7 @@ export default async function UploadPage() {
           <p className="eyebrow">Upload</p>
         </div>
         <h1 className="mt-2 display-lg text-foreground">
-          Add <span className="race-lean text-signal">questions</span>
+          Add <span className="text-signal">questions</span>
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-foreground-dim">
           Upload an <span className="font-mono text-foreground">.xlsx</span>. One

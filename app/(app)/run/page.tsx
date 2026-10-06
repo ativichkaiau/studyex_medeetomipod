@@ -10,8 +10,9 @@ import { Play, ChevronRight, Activity, RefreshCw } from "lucide-react";
 import { formatDuration, pct } from "@/lib/utils";
 import { requireUser } from "@/lib/auth";
 import { countDue } from "@/lib/review/store";
+import { podTitle } from "@/lib/brand";
 
-export const metadata = { title: "Practice — WilliamsPod" };
+export const metadata = { title: podTitle("pods") };
 export const dynamic = "force-dynamic";
 
 export default async function RunsHubPage() {
@@ -30,7 +31,6 @@ export default async function RunsHubPage() {
     <div className="space-y-8">
       {/* Spaced-repetition prompt */}
       <section className="panel-deep relative overflow-hidden p-6 pop-in">
-        <div className="livery-stripe livery-sheen pointer-events-none absolute inset-x-0 top-0 h-[3px]" />
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface-2 text-signal">
@@ -62,7 +62,7 @@ export default async function RunsHubPage() {
         <div>
           <p className="eyebrow">Practice tests</p>
           <h1 className="mt-2 display-lg text-foreground">
-            Practice<span className="race-lean text-signal">.</span>
+            Practice<span className="text-signal">.</span>
           </h1>
           <p className="mt-2 text-sm text-foreground-dim">
             Start a new practice test or review past ones.
@@ -90,7 +90,7 @@ export default async function RunsHubPage() {
           </Button>
         </div>
       ) : (
-        <div className="panel reveal stripe-in overflow-hidden">
+        <div className="panel overflow-hidden">
           <div className="flex items-center justify-between border-b border-border px-5 py-3">
             <p className="eyebrow">Recent tests</p>
             <span className="text-xs text-muted">

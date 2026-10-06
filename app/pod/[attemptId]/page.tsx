@@ -2,9 +2,10 @@ import { notFound, redirect } from "next/navigation";
 import { loadAttemptForRuntime } from "@/lib/attempts";
 import { requireUser } from "@/lib/auth";
 import { ExamRuntime } from "./exam-runtime";
+import { podTitle } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Test — WilliamsPod" };
+export const metadata = { title: podTitle("runtime") };
 
 export default async function PodRuntimePage(
   props: { params: Promise<{ attemptId: string }> },

@@ -21,33 +21,42 @@ type ImportResult = {
 };
 type SubjectSummary = { code: string; name: string; questions: number };
 
+async function fetchSubjectSummaries(hubOrigin: string): Promise<SubjectSummary[]> {
+  try {
+    const res = await fetch(`${hubOrigin.replace(/\/+$/, "")}/api/question-bank?summary=1`);
+    const json = await res.json();
+    return Array.isArray(json.subjects) ? json.subjects : [];
+  } catch {
+    return [];
+  }
+}
+
 export function HubImportClient() {
   const router = useRouter();
   const [origin, setOrigin] = useState(DEFAULT_HUB);
   const [subject, setSubject] = useState("");
   const [mode, setMode] = useState<"merge" | "replace">("merge");
   const [subjects, setSubjects] = useState<SubjectSummary[]>([]);
-  const [loadingSubjects, setLoadingSubjects] = useState(false);
+  const [loadingSubjects, setLoadingSubjects] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ImportResult | null>(null);
 
   async function loadSubjects() {
     setLoadingSubjects(true);
-    try {
-      const res = await fetch(`${origin.replace(/\/+$/, "")}/api/question-bank?summary=1`);
-      const json = await res.json();
-      setSubjects(Array.isArray(json.subjects) ? json.subjects : []);
-    } catch {
-      setSubjects([]);
-    } finally {
-      setLoadingSubjects(false);
-    }
+    setSubjects(await fetchSubjectSummaries(origin));
+    setLoadingSubjects(false);
   }
 
   useEffect(() => {
-    void loadSubjects();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let active = true;
+    void fetchSubjectSummaries(DEFAULT_HUB).then((nextSubjects) => {
+      if (active) {
+        setSubjects(nextSubjects);
+        setLoadingSubjects(false);
+      }
+    });
+    return () => { active = false; };
   }, []);
 
   async function submit() {
@@ -77,11 +86,11 @@ export function HubImportClient() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Import from WilliamsHub</CardTitle>
+        <CardTitle>Import from studyex_medeetomihub</CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         <p className="text-sm text-foreground-dim">
-          Pull the generated question bank from WilliamsHub straight into the Pod bank — arrives grouped by lecture.
+          Pull the generated question bank from studyex_medeetomihub straight into the pod registry — arrives grouped by lecture.
         </p>
 
         <div className="space-y-2">

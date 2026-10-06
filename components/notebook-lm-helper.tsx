@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const PROMPT_TEMPLATE = `You are generating practice multiple-choice questions for medical-board exam prep in the WilliamsPod format. Use ONLY the sources in this notebook as content. Do NOT invent facts beyond what the sources support.
+const PROMPT_TEMPLATE = `You are generating practice multiple-choice questions for medical-board exam prep in the studyex_medeetomipod format. Use ONLY the sources in this notebook as content. Do NOT invent facts beyond what the sources support.
 
 SUBJECT: <SUBJECT>
 LANGUAGE: English only — no Thai or other scripts in stems, choices, or explanations.

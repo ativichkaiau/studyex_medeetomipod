@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { WilliamsPodLogo } from "@/components/brand/williamspod-logo";
+import { PodLogo } from "@/components/brand/pod-brand";
+import { PARENT, PRODUCT } from "@/lib/brand";
 import { PageMotion } from "@/components/motion/page-motion";
 import {
   Gauge,
@@ -20,16 +21,16 @@ import {
 type ShellUser = { id: string; name: string; role: "admin" | "member" };
 
 const MEMBER_LINKS = [
-  { href: "/", label: "Dashboard", icon: Gauge },
-  { href: "/bank", label: "Bank", icon: Warehouse },
-  { href: "/run", label: "Practice", icon: Flag },
-  { href: "/standings", label: "Progress", icon: Trophy },
-  { href: "/history", label: "History", icon: History },
+  { href: "/", label: "pods", icon: Gauge },
+  { href: "/run", label: "review", icon: Flag },
+  { href: "/bank", label: "questions", icon: Warehouse },
+  { href: "/standings", label: "diagnostics", icon: Trophy },
+  { href: "/history", label: "attempts", icon: History },
 ];
 
 const ADMIN_EXTRA = [
-  { href: "/upload", label: "Upload", icon: Upload },
-  { href: "/admin", label: "Admin", icon: Shield },
+  { href: "/upload", label: "ingest", icon: Upload },
+  { href: "/admin", label: "admin", icon: Shield },
 ];
 
 export function AppShell({
@@ -45,18 +46,10 @@ export function AppShell({
 
   return (
     <div className="flex min-h-svh flex-col">
-      <header className="app-header sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
-        {/* Lap rail: dim livery track, bright fill tracking page scroll. */}
-        <div aria-hidden="true" className="livery-rail livery-sheen h-[3px] w-full">
-          <span className="livery-stripe livery-rail-track" />
-          <span className="livery-stripe livery-rail-fill scroll-rail" />
-        </div>
+      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
         <div className="mx-auto flex min-h-20 w-full max-w-6xl flex-wrap items-center gap-x-6 px-5 pt-4 sm:px-6 xl:flex-nowrap xl:py-0">
-          <Link href="/" aria-label="WilliamsPod dashboard" className="flex shrink-0 items-center gap-3">
-            <WilliamsPodLogo
-              size="md"
-              subtitle="Exam Practice"
-            />
+          <Link href="/" aria-label="studyex_medeetomipod home" className="flex shrink-0 items-center">
+            <PodLogo size="md" />
           </Link>
           <nav aria-label="Main navigation" className="order-last mt-3 flex w-full min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden xl:order-none xl:mt-0 xl:w-auto xl:flex-1 xl:justify-center">
             {links.map(({ href, label, icon: Icon }) => {
@@ -101,22 +94,13 @@ export function AppShell({
           </div>
         </div>
       </header>
-      <main className="page-frame mx-auto w-full max-w-6xl flex-1 px-5 py-8 sm:px-6 sm:py-12">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8 sm:px-6 sm:py-12">
         <PageMotion nested>{children}</PageMotion>
       </main>
       <footer className="mx-auto w-full max-w-6xl px-5 sm:px-6">
-        <div aria-hidden="true" className="flex h-2 gap-3">
-          <span className="livery-stripe livery-sheen relative w-16" />
-          <span className="track-hatch hatch-scroll flex-1" />
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-3 py-5 text-xs text-muted">
-          <div className="flex items-center gap-2">
-            <span>Practice under exam conditions</span>
-          </div>
-          <span className="flex items-center gap-3">
-            <span className="text-[11px] tracking-wide">VESTRIPPN<span className="text-brand">3.0</span> · M-8</span>
-            <span className="font-mono tabular">v0.2</span>
-          </span>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-5">
+          <span className="mono-label">{PARENT} / {PRODUCT}</span>
+          <span className="digit text-xs text-muted">v0.2</span>
         </div>
       </footer>
     </div>

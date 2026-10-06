@@ -71,7 +71,7 @@ export function AdminTools({
           <p className="eyebrow">Admin</p>
         </div>
         <h1 className="mt-2 display-lg text-foreground">
-          Admin <span className="race-lean text-signal">tools</span>
+          Admin <span className="text-signal">tools</span>
         </h1>
         <p className="mt-2 text-sm text-foreground-dim">
           Create invite codes and manage members. The question bank is shared;

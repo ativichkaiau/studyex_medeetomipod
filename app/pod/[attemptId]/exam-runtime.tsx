@@ -544,25 +544,18 @@ export function ExamRuntime({
   // ---------- Pre-arm splash ----------
   if (!armed) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-grid grid-drift p-6">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-grid p-6">
         <div className="relative w-full max-w-xl pop-in">
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="dot dot-live text-signal" />
+              <span className="dot pod-pulse text-signal" />
               <p className="eyebrow">Before you start</p>
-            </div>
-            <div className="lamp-row flex items-center gap-1.5" aria-hidden="true">
-              <span className="start-lamp lit" />
-              <span className="start-lamp lit" />
-              <span className="start-lamp lit" />
-              <span className="start-lamp lit" />
-              <span className="start-lamp lit" />
             </div>
           </div>
 
           <div className="panel-deep p-8">
             <h1 className="display-lg text-foreground">
-              Ready to <span className="race-lean text-signal">start</span>
+              Ready to <span className="text-signal">start</span>
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-foreground-dim">
               The timer starts as soon as you begin. Fullscreen engages where
@@ -813,7 +806,7 @@ function TopBar({
               <div
                 className={cn(
                   "h-full rounded-full transition-[width] duration-700",
-                  danger ? "bg-bad" : "bg-wm-yellow",
+                  danger ? "bg-bad" : "bg-signal",
                 )}
                 style={{ width: `${pctLeft}%` }}
               />
@@ -986,7 +979,7 @@ function QuestionView({
           <Flag
             className={cn(
               "h-3.5 w-3.5",
-              isMarked ? "text-wm-yellow fill-wm-yellow/40" : "text-muted",
+              isMarked ? "text-warn fill-warn/40" : "text-muted",
             )}
           />
           {isMarked ? "Flagged" : "Flag"}
@@ -1014,7 +1007,7 @@ function QuestionView({
                   className={cn(
                     "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] border font-mono text-[11px] font-bold transition-colors",
                     selected
-                      ? "border-signal bg-wm-yellow text-wm-navy"
+                      ? "border-signal bg-signal text-white"
                       : "border-border-strong bg-surface-2 text-muted",
                   )}
                 >
@@ -1056,7 +1049,7 @@ function QuestionView({
                 className={cn(
                   "flex h-7 w-7 items-center justify-center rounded-md border font-mono text-[11px] font-semibold transition-colors",
                   active
-                    ? "border-signal bg-wm-yellow text-wm-navy"
+                    ? "border-signal bg-signal text-white"
                     : "border-border bg-surface-2 text-muted hover:text-foreground",
                 )}
               >
@@ -1122,7 +1115,7 @@ function Navigator({
             >
               {i + 1}
               {isMarked && (
-                <Flag className="absolute -right-1 -top-1 h-2.5 w-2.5 fill-wm-yellow text-wm-yellow" />
+                <Flag className="absolute -right-1 -top-1 h-2.5 w-2.5 fill-warn text-warn" />
               )}
             </button>
           );
@@ -1132,7 +1125,7 @@ function Navigator({
       <div className="mt-5 space-y-2 border-t border-border pt-4 text-[11px] text-muted">
         <LegendDot color="bg-good-soft border-good/40">answered</LegendDot>
         <LegendDot color="bg-signal/20 border-signal/60">current</LegendDot>
-        <LegendDot color="bg-wm-yellow">flagged</LegendDot>
+        <LegendDot color="bg-warn">flagged</LegendDot>
       </div>
 
       <div className="mt-4 space-y-1.5 border-t border-border pt-4">
